@@ -1,0 +1,22 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Javalog Maven Webapp 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-war-plugin:2.1.1:war (default-cli) @ Javalog ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [Javalog] in [C:\Users\b21019\workspaces\workspace\Javalog\target\Javalog]
+[INFO] Processing war project
+[INFO] Copying webapp resources [C:\Users\b21019\workspaces\workspace\Javalog\src\main\webapp]
+[INFO] Webapp assembled in [1244 msecs]
+[INFO] Building war: C:\Users\b21019\workspaces\workspace\Javalog\target\Javalog.war
+[WARNING] Warning: selected war files include a WEB-INF/web.xml which will be ignored 
+(webxml attribute is missing from war task, or ignoreWebxml attribute is specified as 'true')
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.349s
+[INFO] Finished at: Tue Sep 30 13:53:06 CEST 2014
+[INFO] Final Memory: 13M/35M
+[INFO] ------------------------------------------------------------------------

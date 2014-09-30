@@ -1,11 +1,18 @@
 package com.shy.application;
 	
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.swing.SwingUtilities;
 
@@ -19,6 +26,7 @@ import com.shy.application.pojo.PreferenceTags;
 import com.shy.application.pojo.Workspace;
 import com.shy.application.xml.ReadXML;
 import com.shy.application.xml.WriteXML;
+import com.shy.application.xml.pojo.Workspaces;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -42,6 +50,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextBuilder;
 
 public class Main extends Application {
+	
+	/*
+	 * XML INSTEAD OF MYSQL
+	 */
+	
+	PrintStream console = System.out;
 	MenuBar menuBar;
 	Menu menu;
 	Menu fileMenu;
@@ -55,6 +69,8 @@ public class Main extends Application {
 	ListView<String> listView;
 	ObservableList<String> items;
 	TextArea consoleOutput;
+	
+	File mavenOutput = new File("compiler/maven_output.txt");
 	
 	Pane pane;
 	SQL sql = new SQL();	
@@ -84,6 +100,8 @@ public class Main extends Application {
 		}
 	}
 	
+	
+	
 	public Pane getPane(Stage stage) {
 		pane = new Pane();
 		MavenCli maven = new MavenCli();
@@ -104,60 +122,89 @@ public class Main extends Application {
 		consoleOutput.setLayoutY(250);
 		consoleOutput.setEditable(false);
 		
-		Console console = new Console(consoleOutput);
-		PrintStream ps = new PrintStream(console, true);
-		ps.flush();
-		System.setOut(ps);
-		System.setErr(ps);
-		
-		
-		
 		Button compileBtn = new Button("Compile");
 		compileBtn.setLayoutX(150);
 		compileBtn.setLayoutY(205);
-		compileBtn.setOnAction(e -> {
-			
-			/*readXml.readXMLPreferences(getPreferencesFile()).forEach(preferences -> {
-				if (preferences.getStatus().equals("true")) {
-					ConsoleOutput outputWindow = new ConsoleOutput();
-					Stage outputStage = new Stage();
-					outputWindow.getOutputPane(outputStage);
+		compileBtn.setOnAction(compile -> {
+			try {
+				setOut(new FileOutputStream(mavenOutput));	
+				
+				String selectedProject = listView.getSelectionModel().getSelectedItem();
+				String projectPath = sql.getProjectPath(selectedProject);			
+				maven.doMain(new String[]{"compile"}, projectPath,System.out, System.out);
+				maven.doMain(new String[]{"eclipse:eclipse"}, projectPath,System.out, System.out);
+				
+				setOut(console);
+				
+				Path path = Paths.get(mavenOutput.getPath());
+				Stream<String> mvnOutput = Files.lines(path);
+				String buildSuccess = mvnOutput.filter(a -> a.contains("BUILD SUCCESS")).findFirst().get();
+				if(buildSuccess.equals("[INFO] BUILD SUCCESS")) {
+					System.out.println("Successfully compiled project: "+selectedProject);
+				}else {
+					System.out.println("Build Failure");
 				}
-			});*/
-			
-			String selectedProject = listView.getSelectionModel().getSelectedItem();
-			String projectPath = sql.getProjectPath(selectedProject);			
-			maven.doMain(new String[]{"compile"}, projectPath,System.out, System.out);
-			maven.doMain(new String[]{"eclipse:eclipse"}, projectPath,System.out, System.out);
+				mvnOutput.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 		
 		Button ciBtn = new Button("Clean Install");
 		ciBtn.setLayoutX(215);
 		ciBtn.setLayoutY(205);
-		ciBtn.setOnAction(e -> {
-			
-			/*readXml.readXMLPreferences(getPreferencesFile()).forEach(preferences -> {
-				if (preferences.getStatus().equals("true")) {
-					ConsoleOutput outputWindow = new ConsoleOutput();
-					Stage outputStage = new Stage();
-					outputWindow.getOutputPane(outputStage);
+		ciBtn.setOnAction(cleanInstall -> {
+			try {
+				setOut(new FileOutputStream(mavenOutput));
+				
+				String selectedProject = listView.getSelectionModel().getSelectedItem();
+				String projectPath = sql.getProjectPath(selectedProject);			
+				maven.doMain(new String[]{"clean install"}, projectPath,System.out, System.out);
+				maven.doMain(new String[]{"eclipse:eclipse"}, projectPath,System.out, System.out);
+				
+				setOut(console);
+				
+				Path path = Paths.get(mavenOutput.getPath());
+				Stream<String> mvnOutput = Files.lines(path);
+				String buildSuccess = mvnOutput.filter(a -> a.contains("BUILD SUCCESS")).findFirst().get();
+				if(buildSuccess.equals("[INFO] BUILD SUCCESS")) {
+					System.out.println("Successfully compiled project: "+selectedProject);
+				}else {
+					System.out.println("Build Failure");
 				}
-			});*/
-			
-			String selectedProject = listView.getSelectionModel().getSelectedItem();
-			String projectPath = sql.getProjectPath(selectedProject);			
-			maven.doMain(new String[]{"clean install"}, projectPath,System.out, System.out);
-			maven.doMain(new String[]{"eclipse:eclipse"}, projectPath,System.out, System.out);
+				mvnOutput.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 		
 		Button warBtn = new Button("War:War");
 		warBtn.setLayoutX(300);
 		warBtn.setLayoutY(205);
-		warBtn.setOnAction(e -> {
-			String selectedProject = listView.getSelectionModel().getSelectedItem();
-			String projectPath = sql.getProjectPath(selectedProject);			
-			maven.doMain(new String[]{"war:war"}, projectPath,System.out, System.out);
+		warBtn.setOnAction(war -> {
+			try {
+				setOut(new FileOutputStream(mavenOutput));
+				
+				String selectedProject = listView.getSelectionModel().getSelectedItem();
+				String projectPath = sql.getProjectPath(selectedProject);			
+				maven.doMain(new String[]{"war:war"}, projectPath,System.out, System.out);
+				
+				setOut(console);
+				
+				Path path = Paths.get(mavenOutput.getPath());
+				Stream<String> mvnOutput = Files.lines(path);
+				String buildSuccess = mvnOutput.filter(a -> a.contains("BUILD SUCCESS")).findFirst().get();
+				if(buildSuccess.equals("[INFO] BUILD SUCCESS")) {
+					System.out.println("Successfully compiled project: "+selectedProject);
+				}else {
+					System.out.println("Build Failure");
+				}
+				mvnOutput.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
+		
 		pane.getChildren().add(compileBtn);	
 		pane.getChildren().add(ciBtn);	
 		pane.getChildren().add(warBtn);	
@@ -178,42 +225,15 @@ public class Main extends Application {
 		preferencesMenu = new Menu("Preferences");
 		preferenceCheck = new CheckMenuItem("Show console");		
 		
-		/*readXml.readXMLPreferences(getPreferencesFile()).forEach(preferences -> {
-			if(preferences.getStatus().equals("true")) {
-				preferenceCheck.setSelected(true);
-			}
-			if(preferences.getStatus().equals("false")) {
-				preferenceCheck.setSelected(false);
-			}
-		});*/
-		
-		/*preferenceCheck.setOnAction(check -> {
-			readXml.readXMLPreferences(getPreferencesFile()).forEach(preferences -> {
-				if(preferences.getStatus().equals("true")) {
-					prefTags.setConsolewindow(false);		
-					
-				}
-				if(preferences.getStatus().equals("false")) {
-					prefTags.setConsolewindow(true);
-				}
-			});
-			
-			try {
-				writeXml.savePreferences(getPreferencesFile(), prefTags);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		});*/
-		
 		preferencesMenu.getItems().add(preferenceCheck);
-		getExistingWorkspaces(stage);
+		getExistingWorkspaces();
 		
 		resetItem = new MenuItem("Reset");
 		resetItem.setOnAction(e -> {
 			sql.resetTable("workspace");
 			sql.resetTable("project");
 			System.out.println("tables has been reset!");
-			getExistingWorkspaces(stage);
+			getExistingWorkspaces();
 		});
 		MenuItem closeItem = new MenuItem("Close");
 		
@@ -222,7 +242,25 @@ public class Main extends Application {
 		return menuBar;
 	}
 	
-	private void getAddWorkspaceButton(Stage stage) {
+	private void getExistingWorkspaces() {
+		ReadXML read = new ReadXML();
+		workspacesMenu.getItems().clear();
+		getAddWorkspaceButton();
+		List<Workspaces> w = read.readWorkspaces("compiler/workspaces.xml");
+		w.forEach(workspace -> {
+			existingWorkspace = new MenuItem(workspace.getPath());
+			existingWorkspace.setOnAction(existing -> {
+				items.clear();
+				List<File> project = getProjects(workspace.getPath());
+				project.forEach(e -> {
+					items.add(e.getName());
+				});
+			});
+		});
+		workspacesMenu.getItems().add(existingWorkspace);
+	}
+	
+	private void getAddWorkspaceButton() {
 		addWorkspaceItem = new MenuItem("Add Workspace");
 		addWorkspaceItem.setOnAction(action -> {
 			DirectoryChooser dirChooser = new DirectoryChooser();
@@ -230,7 +268,17 @@ public class Main extends Application {
 			
 			File workspaceDir = dirChooser.showDialog(null);
 			if(workspaceDir != null) {
-				if(sql.checkDupWorkspace().contains(workspaceDir.getPath())) {
+				
+				WriteXML write = new WriteXML();
+				try {
+					write.insertWorkspace("compiler/workspaces.xml");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				/*if(sql.checkDupWorkspace().contains(workspaceDir.getPath())) {
 					System.out.println("Workspace already exists");
 					Dialogs.create()
 						      .title("Duplicate Workspace")
@@ -244,14 +292,18 @@ public class Main extends Application {
 					});
 					getExistingWorkspaces(stage);
 				}
+				*/
+				
+				
 			}
 		});
 		workspacesMenu.getItems().add(addWorkspaceItem);
 	}
 	
-	private void getExistingWorkspaces(Stage stage) {
+	
+/*	private void getExistingWorkspaces() {
 		workspacesMenu.getItems().clear();
-		getAddWorkspaceButton(stage);
+//		getAddWorkspaceButton();
 		SQL workspaceSQL = new SQL();
 		List<Workspace> list = workspaceSQL.getData();
 		list.forEach(workspace -> {
@@ -265,7 +317,10 @@ public class Main extends Application {
 			});
 			workspacesMenu.getItems().add(existingWorkspace);
 		});
-	}
+	}*/
+	
+	
+	
 	
 	private List<File> getProjects(String path) {
 		List<File> list = new ArrayList<>();
@@ -281,6 +336,19 @@ public class Main extends Application {
 			}
 		}
 		return list;
+	}
+	
+	private void setOut(OutputStream output)  {
+		try {
+//			FileOutputStream output = new FileOutputStream(file);
+			PrintStream ps = new PrintStream(output);
+			System.setOut(ps);
+			
+//			PrintStream console = System.out;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getPreferencesFile() {

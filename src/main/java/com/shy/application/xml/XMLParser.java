@@ -13,77 +13,20 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-
-
-
-
-
-import com.shy.application.pojo.ConsoleWindow;
-import com.shy.application.pojo.Preferences;
-import com.shy.application.xml.pojo.Values;
 import com.shy.application.xml.pojo.Workspaces;
 
 
-public class ReadXML {
-
-	public static void main(String[] args) {
-		ReadXML readXml = new ReadXML();
+public class XMLParser {
+	public static void main(String[]rgs) {
+		XMLParser xml = new XMLParser();
 		
-		for(Workspaces w : readXml.readWorkspaces("compiler/workspaces.xml")) {
-			
+		for(Workspaces w : xml.parseXML("compiler/workspaces.xml")) {
+			System.out.println(w.getName());
+			System.out.println(w.getPath());
 		}
-		
 	}
 	
-	public List<ConsoleWindow> readXMLPreferences(String configFile) {
-		List<ConsoleWindow> consoleWindow = new ArrayList<ConsoleWindow>();
-		ConsoleWindow nameAddress = null;
-		try {
-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-			InputStream in = new FileInputStream(configFile);
-			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
-			
-			while(eventReader.hasNext()) {
-				XMLEvent event = eventReader.nextEvent();
-				
-				if(event.isStartElement()) {
-					StartElement startElement = event.asStartElement();
-					String startElementName = startElement.getName().getLocalPart();  
-					
-					if(startElementName.equals("consolewindow")) {
-						nameAddress = new ConsoleWindow();
-					}
-					
-					if(event.isStartElement()) {
-						if(event.asStartElement().getName().getLocalPart().equals("status")) {
-							event = eventReader.nextEvent();
-							nameAddress.setStatus(event.asCharacters().getData());
-							continue;
-						}
-						
-					}
-				}
-				if(event.isEndElement()) {
-					EndElement endElement = event.asEndElement();
-					String endElementName = endElement.asEndElement().getName().getLocalPart(); 
-					
-					if(endElementName.equals("consolewindow")) {
-						consoleWindow.add(nameAddress);
-					}
-				}
-			}
-		}
-		catch(FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch(XMLStreamException e) {
-			e.printStackTrace();
-		}
-		return consoleWindow;
-	}
-
-
-	public List <Workspaces> readWorkspaces(String configFile) {
+	public List <Workspaces> parseXML(String configFile) {
 		List<Workspaces> nameAddressList = new ArrayList<>();
 		Workspaces workspace = null;
 		
@@ -114,7 +57,7 @@ public class ReadXML {
 							workspace.setPath(event.asCharacters().getData());
 							continue;
 						}
-	
+
 					}
 				}
 				if(event.isEndElement()) {
@@ -136,4 +79,6 @@ public class ReadXML {
 		}
 		return nameAddressList;
 	}
+	
+	
 }
