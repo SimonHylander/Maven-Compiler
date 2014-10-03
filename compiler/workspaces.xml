@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <workspaces>
-	<workspace>
-		<name>workspace</name>
-		<path>C:\Users\b21019\workspaces\workspace</path>
-	</workspace>
+<workspace>
+<name>workspace</name>
+<path>C:/Users/b21019/</path>
+</workspace>
+<workspace>
+<name>Favorites</name>
+<path>C:\Users\b21019\Favorites</path>
+</workspace>
 </workspaces>

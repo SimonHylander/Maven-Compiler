@@ -3,6 +3,7 @@ package com.shy.application.xml.pojo;
 public class Workspaces {
 	String name;
 	String path;
+	
 	public String getName() {
 		return name;
 	}
@@ -16,4 +17,9 @@ public class Workspaces {
 		this.path = path;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return "name = "+name+" path = "+path;
+	}
 }

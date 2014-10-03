@@ -30,7 +30,7 @@ public class ReadXML {
 		ReadXML readXml = new ReadXML();
 		
 		for(Workspaces w : readXml.readWorkspaces("compiler/workspaces.xml")) {
-			
+			System.out.println(w);
 		}
 		
 	}

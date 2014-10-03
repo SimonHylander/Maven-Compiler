@@ -271,12 +271,12 @@ public class Main extends Application {
 				
 				WriteXML write = new WriteXML();
 				try {
-					write.insertWorkspace("compiler/workspaces.xml");
+					write.insertWorkspace(workspaceDir.getName(), workspaceDir.getPath());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				getExistingWorkspaces();
 				
 				/*if(sql.checkDupWorkspace().contains(workspaceDir.getPath())) {
 					System.out.println("Workspace already exists");

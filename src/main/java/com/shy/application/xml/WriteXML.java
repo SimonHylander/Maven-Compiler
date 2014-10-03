@@ -1,127 +1,57 @@
 package com.shy.application.xml;
 
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
-import javax.xml.stream.XMLEventFactory;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartDocument;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
-
-import com.shy.application.pojo.PreferenceTags;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class WriteXML {
 	
 	public static void main(String[]args) {
-		
 		WriteXML xml = new WriteXML();
 		try {
-			xml.insertWorkspace("compiler/test.xml");
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-	}
-	
-	/*public void savePreferences(String configFile, PreferenceTags prefTags) throws Exception {
-		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-		XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(new FileOutputStream(configFile));
-		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		XMLEvent end = eventFactory.createDTD("\n");
-		StartDocument startDocument = eventFactory.createStartDocument();
-		eventWriter.add(startDocument);
-		
-		List<PreferenceTags> prefTagsList = new ArrayList<>();
-		
-		if(prefTags.isConsolewindow()) {
-			prefTags.setName("status");
-			prefTags.setValue("true");
-		}else {
-			prefTags.setName("status");
-			prefTags.setValue("false");
-		}
-		prefTags.setInnertag("consolewindow"); // loop when there's more
-		prefTagsList.add(prefTags);
-		
-		createMaintag(eventWriter, eventFactory, end, prefTagsList);
-		
-		eventWriter.add(eventFactory.createEndDocument());
-		eventWriter.close();
-	}*/
-	
-	public void insertWorkspace(String filepath) throws Exception {
-		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-		XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(new FileOutputStream(filepath));
-		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		XMLEvent end = eventFactory.createDTD("\n");
-		StartDocument startDocument = eventFactory.createStartDocument();
-		eventWriter.add(startDocument);
-		
-		List<String> nodeList = new ArrayList<>();
-		
-		createMaintag(eventWriter, eventFactory, end, "workspaces", "workspace", nodeList);
-		
-		eventWriter.add(eventFactory.createEndDocument());
-		eventWriter.close();
-	}
-	
-	private void createMaintag(XMLEventWriter eventWriter, XMLEventFactory eventFactory, XMLEvent end, String startTag, String innerTag, List<String> nodeList)  {
-		StartElement configStartElement = eventFactory.createStartElement("", "", startTag);
-		try {
-			eventWriter.add(configStartElement);
-			eventWriter.add(end);
-			
-			
-			
-			createInnerTag(eventWriter, eventFactory, end, "innerTag", nodeList, "workspace");	
-			
-			
-			
-			eventWriter.add(eventFactory.createEndElement("", "",""));
-			eventWriter.add(end);
-			
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
+			xml.insertWorkspace("workspace","C:/Users/b21019/");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void createInnerTag(XMLEventWriter eventWriter, XMLEventFactory eventFactory, XMLEvent end, String innerTag, List<String> nodeList , String value) throws Exception {
-		StartElement configStartElement = eventFactory.createStartElement("", "", innerTag);
-		eventWriter.add(configStartElement); 
-		eventWriter.add(end);
-		
-		for(String str : nodeList) {
-			
-		}
-		
-//		createNode(eventWriter, name, value);					
-		
-		eventWriter.add(eventFactory.createEndElement("","",""));
-		eventWriter.add(end);
-		
+	public void insertWorkspace(String name, String path) throws Exception {
+		 DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+	        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+	        Document document = documentBuilder.parse("compiler/workspaces.xml");
+	        Element root = document.getDocumentElement();
+	        
+	        // Root Element
+	        Element rootElement = document.getDocumentElement();
+	        
+	        // server elements
+	        Element workspace = document.createElement("workspace");
+	        rootElement.appendChild(workspace);
+	        
+	        Element nameElement = document.createElement("name");
+	        nameElement.appendChild(document.createTextNode(name));
+	        workspace.appendChild(nameElement);
+	        
+	        Element pathElement = document.createElement("path");
+	        pathElement.appendChild(document.createTextNode(path));
+	        workspace.appendChild(pathElement);
+	        
+	        root.appendChild(workspace);
+	        
+	        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+	        transformerFactory.setAttribute("indent-number", 2);
+	        Transformer transformer = transformerFactory.newTransformer();
+	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	        
+	        DOMSource source = new DOMSource(document);
+	        StreamResult result =  new StreamResult("compiler/workspaces.xml");
+	        transformer.transform(source, result);
 	}
-	
-	private void createNode(XMLEventWriter eventWriter, String name, String value) throws XMLStreamException {
-		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		XMLEvent end = eventFactory.createDTD("\n");
-		XMLEvent tab = eventFactory.createDTD("\t");
-		
-		StartElement startElement = eventFactory.createStartElement("", "", name);
-		eventWriter.add(tab);
-		eventWriter.add(startElement);
-		Characters chars = eventFactory.createCharacters(value);
-		eventWriter.add(chars);
-		
-		EndElement endElement = eventFactory.createEndElement("", "",name);
-		eventWriter.add(endElement);
-		eventWriter.add(end);
-	}
-	
 }
