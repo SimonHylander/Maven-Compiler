@@ -10,14 +10,36 @@ import java.util.List;
 
 import com.shy.application.pojo.Workspace;
 
-public class SQL {
+public class SQLH2 {
+	String user = "sa";
+	String pass = "";
+	String url = "jdbc:h2:~/test";
+	
+/*	public static void main(String[]args) {
+		String result = "";
+		Connection connection = null;
+		
+		try {
+			Class.forName("org.h2.Driver");
+			connection = DriverManager.getConnection(url, user, pass);
+			String query = "select * from workspace";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			System.out.println(rs.next());
+			while(rs.next()) {
+				System.out.println(rs.getString("name"));
+			}
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}*/
 	
 	public String getProjectPath(String name) {
 		String result = "";
 		Connection connection = null;
-		String user = "root";
-		String pass = "";
-		String url = "jdbc:mysql://localhost:3306/mavencompiler";
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
@@ -38,9 +60,7 @@ public class SQL {
 	public List<Workspace> getWorkspaces() {
 		List<Workspace> list = new ArrayList<>();
 		Connection connection = null;
-		String user = "root";
-		String pass = "";
-		String url = "jdbc:mysql://localhost:3306/mavencompiler";
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
@@ -66,9 +86,7 @@ public class SQL {
 		List<String>list = new ArrayList<>();
 		
 		Connection connection = null;
-		String user = "root";
-		String pass = "";
-		String url = "jdbc:mysql://localhost:3306/mavencompiler";
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
@@ -88,9 +106,7 @@ public class SQL {
 	
 	public void insertWorkspace(String path) {
 		Connection connection = null;
-		String user = "root";
-		String pass = "";
-		String url = "jdbc:mysql://localhost:3306/mavencompiler";
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
@@ -110,9 +126,7 @@ public class SQL {
 	
 	public void insertProject(String path) {
 		Connection connection = null;
-		String user = "root";
-		String pass = "";
-		String url = "jdbc:mysql://localhost:3306/mavencompiler";
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
@@ -135,9 +149,7 @@ public class SQL {
 	
 	public void resetTable(String table) {
 		Connection connection = null;
-		String user = "root";
-		String pass = "";
-		String url = "jdbc:mysql://localhost:3306/mavencompiler";
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
