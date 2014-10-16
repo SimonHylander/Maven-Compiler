@@ -17,11 +17,12 @@ import java.util.stream.Stream;
 import javax.swing.SwingUtilities;
 
 import org.apache.maven.cli.MavenCli;
+import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 
-import com.shy.application.ConsoleOutput;
+
+
 import com.shy.application.database.SQL;
-import com.shy.application.database.SQLH2;
 import com.shy.application.pojo.ConsoleWindow;
 import com.shy.application.pojo.PreferenceTags;
 import com.shy.application.pojo.Workspace;
@@ -96,6 +97,9 @@ public class Main extends Application {
 	public Pane getPane(Stage stage) {
 		pane = new Pane();
 		MavenCli maven = new MavenCli();
+
+		
+	
 		
 		
 		listView = new ListView<>();
@@ -244,6 +248,8 @@ public class Main extends Application {
 			if(workspaceDir != null) {
 				getExistingWorkspaces(stage);
 				
+				
+				
 				/*if(sql.checkDupWorkspace().contains(workspaceDir.getPath())) {
 					System.out.println("Workspace already exists");
 					Dialogs.create()
@@ -259,17 +265,7 @@ public class Main extends Application {
 					getExistingWorkspaces(stage);
 				}*/
 				
-				SQLH2 sql = new SQLH2();
-				if(sql.checkDupWorkspace().contains(workspaceDir.getPath())) {
-					System.out.println("Workspace already exists");
-				}else {
-					sql.insertWorkspace(workspaceDir.getPath());
-					List<File> list = getProjects(workspaceDir.getPath());
-					list.forEach(project -> {
-						sql.insertProject(project.getPath());
-					});
-					getExistingWorkspaces(stage);
-				}
+				
 				
 			}
 		});
@@ -279,7 +275,7 @@ public class Main extends Application {
 	private void getExistingWorkspaces(Stage stage) {
 		workspacesMenu.getItems().clear();
 		getAddWorkspaceButton(stage);
-		SQLH2 sql = new SQLH2();
+		
 		/*SQL workspaceSQL = new SQL();
 		
 		List<Workspace> list = workspaceSQL.getWorkspaces();
@@ -295,18 +291,7 @@ public class Main extends Application {
 			workspacesMenu.getItems().add(existingWorkspace);
 		});*/
 		
-		List<Workspace> list = sql.getWorkspaces();
-		list.forEach(workspace -> {
-			System.out.println(workspace.getPath());
-			existingWorkspace = new MenuItem(workspace.getPath());
-			existingWorkspace.setOnAction(existing -> {
-				items.clear();
-				List<File> project = getProjects(workspace.getPath());
-				project.forEach(e -> {
-					items.add(e.getName());
-				});
-			});
-		});
+		
 		
 	}
 	
