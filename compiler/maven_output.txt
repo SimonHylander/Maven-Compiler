@@ -1,22 +1,37 @@
 [INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.docu.applications:ApplicationLayer:war:1.0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:build-helper-maven-plugin is missing. @ line 12, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
-[INFO] Building Hibernate-Tutorial 1.0-SNAPSHOT
+[INFO] Building ApplicationLayer 1.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
+ wagon http use multi threaded http connection manager maxPerRoute 20, max total 40
+Downloading: http://download.java.net/maven/2/org/restlet/jee/org.restlet.parent/2.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://source.db4o.com/maven/org/restlet/jee/org.restlet.parent/2.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/org/restlet/jee/org.restlet.parent/2.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repo1.maven.org/maven2/org/restlet/jee/org.restlet.parent/2.0-SNAPSHOT/maven-metadata.xml
+297/297 B               Downloaded: http://maven.restlet.org/org/restlet/jee/org.restlet.parent/2.0-SNAPSHOT/maven-metadata.xml (297 B at 0.1 KB/sec)
+            [WARNING] Could not transfer metadata org.restlet.jee:org.restlet.parent:2.0-SNAPSHOT/maven-metadata.xml from/to maven1-java (http://download.java.net/maven/1): No connector available to access repository maven1-java (http://download.java.net/maven/1) of type legacy using the available factories WagonRepositoryConnectorFactory
 [INFO] 
-[INFO] --- maven-war-plugin:2.1.1:war (default-cli) @ Hibernate-Tutorial ---
+[INFO] --- maven-war-plugin:2.1.1:war (default-cli) @ ApplicationLayer ---
 [INFO] Packaging webapp
-[INFO] Assembling webapp [Hibernate-Tutorial] in [C:\Users\b21019\workspaces\workspace\HibernateTutorial\target\Hibernate-Tutorial-1.0-SNAPSHOT]
+[INFO] Assembling webapp [ApplicationLayer] in [C:\Users\b21019\workspaces\workspaceSoa\applicationlayer\target\ApplicationLayer]
 [INFO] Processing war project
-[INFO] Copying webapp resources [C:\Users\b21019\workspaces\workspace\HibernateTutorial\src\main\webapp]
-[INFO] Webapp assembled in [1119 msecs]
-[INFO] Building war: C:\Users\b21019\workspaces\workspace\HibernateTutorial\target\Hibernate-Tutorial-1.0-SNAPSHOT.war
+[INFO] Copying webapp resources [C:\Users\b21019\workspaces\workspaceSoa\applicationlayer\src\main\webapp]
+[INFO] Webapp assembled in [16660 msecs]
+[INFO] Building war: C:\Users\b21019\workspaces\workspaceSoa\applicationlayer\target\ApplicationLayer.war
 [WARNING] Warning: selected war files include a WEB-INF/web.xml which will be ignored 
 (webxml attribute is missing from war task, or ignoreWebxml attribute is specified as 'true')
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 8.770s
-[INFO] Finished at: Mon Oct 13 15:32:17 CEST 2014
-[INFO] Final Memory: 13M/52M
+[INFO] Total time: 45.544s
+[INFO] Finished at: Mon Oct 27 16:37:29 CET 2014
+[INFO] Final Memory: 12M/30M
 [INFO] ------------------------------------------------------------------------

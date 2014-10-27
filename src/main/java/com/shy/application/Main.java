@@ -250,7 +250,7 @@ public class Main extends Application {
 				
 				
 				
-				/*if(sql.checkDupWorkspace().contains(workspaceDir.getPath())) {
+				if(sql.checkDupWorkspace().contains(workspaceDir.getPath())) {
 					System.out.println("Workspace already exists");
 					Dialogs.create()
 						      .title("Duplicate Workspace")
@@ -263,7 +263,7 @@ public class Main extends Application {
 						sql.insertProject(project.getPath());
 					});
 					getExistingWorkspaces(stage);
-				}*/
+				}
 				
 				
 				
@@ -276,7 +276,7 @@ public class Main extends Application {
 		workspacesMenu.getItems().clear();
 		getAddWorkspaceButton(stage);
 		
-		/*SQL workspaceSQL = new SQL();
+		SQL workspaceSQL = new SQL();
 		
 		List<Workspace> list = workspaceSQL.getWorkspaces();
 		list.forEach(workspace -> {
@@ -289,7 +289,7 @@ public class Main extends Application {
 				});
 			});
 			workspacesMenu.getItems().add(existingWorkspace);
-		});*/
+		});
 		
 		
 		
