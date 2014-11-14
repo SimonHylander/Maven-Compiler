@@ -1,0 +1,26 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building MavenProject 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-war-plugin:2.1.1:war (default-cli) @ MavenProject ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [MavenProject] in [C:\Users\b21019\workspaces\workspace\MavenProject\target\MavenProject-1.0-SNAPSHOT]
+[INFO] Processing war project
+[INFO] Webapp assembled in [276 msecs]
+[INFO] Building war: C:\Users\b21019\workspaces\workspace\MavenProject\target\MavenProject-1.0-SNAPSHOT.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.008s
+[INFO] Finished at: Fri Nov 14 16:04:38 CET 2014
+[INFO] Final Memory: 14M/34M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-war-plugin:2.1.1:war (default-cli) on project MavenProject: Error assembling WAR: webxml attribute is required (or pre-existing WEB-INF/web.xml if executing in update mode) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

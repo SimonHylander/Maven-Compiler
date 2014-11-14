@@ -1,4 +1,4 @@
-package com.shy.application;
+package com.shy.application.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +14,8 @@ public class Wamp {
 	
 	public void startWamp() {
 		String command = "";
+		
+		String os = System.getProperty("os.name");
 		
 		/*try {
 			Process process = Runtime.getRuntime().exec("start /wamp/wampmanager.exe");

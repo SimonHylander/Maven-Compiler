@@ -27,11 +27,9 @@ public class SQL {
 			while(rs.next()) {
 				result = rs.getString("path");
 			}
-		} catch(ClassNotFoundException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
+		} 
 		return result;
 	}
 	
@@ -54,9 +52,7 @@ public class SQL {
 				workspace.setPath(rs.getString("path"));
 				list.add(workspace);
 			}
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch(SQLException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return list;
@@ -78,9 +74,7 @@ public class SQL {
 			while(rs.next()) {
 				list.add(rs.getString("path"));
 			}
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch(SQLException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return list;
@@ -101,9 +95,7 @@ public class SQL {
 			pstmt.setString(2, path);
 			pstmt.executeUpdate();
 			pstmt.close();
-		}catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -126,9 +118,7 @@ public class SQL {
 			pstmt.executeUpdate();
 			
 			pstmt.close();
-		}catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		}catch(SQLException e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -144,9 +134,7 @@ public class SQL {
 			String query = "truncate table "+table;
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
