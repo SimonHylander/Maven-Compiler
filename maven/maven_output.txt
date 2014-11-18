@@ -1,26 +1,22 @@
 [INFO] Scanning for projects...
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
-[INFO] Building MavenProject 1.0-SNAPSHOT
+[INFO] Building WebApp Maven Webapp 0.0.1-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
 [INFO] 
-[INFO] --- maven-war-plugin:2.1.1:war (default-cli) @ MavenProject ---
+[INFO] --- maven-war-plugin:2.1.1:war (default-cli) @ WebApp ---
 [INFO] Packaging webapp
-[INFO] Assembling webapp [MavenProject] in [C:\Users\b21019\workspaces\workspace\MavenProject\target\MavenProject-1.0-SNAPSHOT]
+[INFO] Assembling webapp [WebApp] in [C:\Users\b21019\workspaces\workspace\WebApp\target\WebApp]
 [INFO] Processing war project
-[INFO] Webapp assembled in [276 msecs]
-[INFO] Building war: C:\Users\b21019\workspaces\workspace\MavenProject\target\MavenProject-1.0-SNAPSHOT.war
+[INFO] Copying webapp resources [C:\Users\b21019\workspaces\workspace\WebApp\src\main\webapp]
+[INFO] Webapp assembled in [1367 msecs]
+[INFO] Building war: C:\Users\b21019\workspaces\workspace\WebApp\target\WebApp.war
+[WARNING] Warning: selected war files include a WEB-INF/web.xml which will be ignored 
+(webxml attribute is missing from war task, or ignoreWebxml attribute is specified as 'true')
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
+[INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 1.008s
-[INFO] Finished at: Fri Nov 14 16:04:38 CET 2014
-[INFO] Final Memory: 14M/34M
+[INFO] Total time: 7.881s
+[INFO] Finished at: Tue Nov 18 11:25:13 CET 2014
+[INFO] Final Memory: 11M/28M
 [INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-war-plugin:2.1.1:war (default-cli) on project MavenProject: Error assembling WAR: webxml attribute is required (or pre-existing WEB-INF/web.xml if executing in update mode) -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
