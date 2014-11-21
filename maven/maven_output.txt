@@ -9,14 +9,14 @@
 [INFO] Assembling webapp [WebApp] in [C:\Users\b21019\workspaces\workspace\WebApp\target\WebApp]
 [INFO] Processing war project
 [INFO] Copying webapp resources [C:\Users\b21019\workspaces\workspace\WebApp\src\main\webapp]
-[INFO] Webapp assembled in [1367 msecs]
+[INFO] Webapp assembled in [2456 msecs]
 [INFO] Building war: C:\Users\b21019\workspaces\workspace\WebApp\target\WebApp.war
 [WARNING] Warning: selected war files include a WEB-INF/web.xml which will be ignored 
 (webxml attribute is missing from war task, or ignoreWebxml attribute is specified as 'true')
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 7.881s
-[INFO] Finished at: Tue Nov 18 11:25:13 CET 2014
-[INFO] Final Memory: 11M/28M
+[INFO] Total time: 8.659s
+[INFO] Finished at: Fri Nov 21 15:58:13 CET 2014
+[INFO] Final Memory: 13M/31M
 [INFO] ------------------------------------------------------------------------

@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.maven.cli.MavenCli;
 
@@ -132,7 +133,20 @@ public class Maven {
 		}
 		return buildStatus;
 	}
-	public static void main(String[]args) {
-
+	
+	public List<File> getMavenProjects(String path) {
+		List<File> list = new ArrayList<>();
+		File directory = new File(path);
+		File[] fileList = directory.listFiles();
+		for(int i=0;i<fileList.length;i++) {
+			if(fileList[i].isDirectory()) {
+				for(File file : fileList[i].listFiles()) {
+					if(file.toString().contains("pom.xml")) {
+						list.add(fileList[i]);
+					}
+				}
+			}
+		}
+		return list;
 	}
 }

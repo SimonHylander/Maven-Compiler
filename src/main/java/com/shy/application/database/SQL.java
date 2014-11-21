@@ -1,10 +1,13 @@
 package com.shy.application.database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +45,8 @@ public class SQL {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
-			String query = "select * from workspace order by name";
+//			String query = "select * from workspace order by name";
+			String query = "select * from workspace order by date desc";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -88,11 +92,12 @@ public class SQL {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(url, user, pass);
-			String query = "insert into workspace (name, path) values (?, ?)";
+			String query = "insert into workspace (name, path, date) values (?,?,?)";
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			String name = ""+path.substring(path.lastIndexOf("\\")+1);
 			pstmt.setString(1, name);
 			pstmt.setString(2, path);
+			pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			pstmt.executeUpdate();
 			pstmt.close();
 		}catch(Exception e) {
